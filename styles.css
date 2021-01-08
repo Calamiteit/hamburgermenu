@@ -1,33 +1,80 @@
 :root {
-    --menu-bar-width: 60px;
-    --menu-bar-height: 10px;
+    --bar-width: 500px;  /* default: 50px; met deze waarde mag je spelen */
+    --bar-height: 100px; /* default: 10px; met deze waarde mag je spelen */
+    /* ondanks het veranderen van de width en height waarde zal de hamburger */
+    /* blijven werken. Zolang deze in het scherm past ziet het er ook nog    */
+    /* fatsoenlijk uit. */
+    /* de var transition-time werd eerst vaker gebruikt. Nu maar 1 keer dus */
+    --transition-time: 0.3s;       /* zou ook bij 'transition  kunnen staan */
+    --space-between: calc(2* var(--bar-height));
+}
+
+/* geen idee waarom de middelste balk (div #menu) in fadet */
+/* bij de eerste keer openen kwam deze al binnen 'vliegen' */
+
+#container {
+    position: absolute;
+    padding: 0;
+    /* container border is for perspective only */
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkred;
+    top: 50px;
+    left: 50px;
+    height: calc(3 * var(--bar-height) + var(--space-between));
+    width: var(--bar-width);
 }
 
 #menu {
-    background-color: #D84282;
     position: relative;
-    width: var(--menu-bar-width);
-    height: var(--menu-bar-height);
-    margin: 100px;
+    top: calc(2 * var(--bar-height));
+}
+
+#menu,
+#menu::before,
+#menu::after {
+    background-color: crimson;
+    width: var(--bar-width);
+    height: var(--bar-height);
+    transition: var(--transition-time);
 }
 
 #menu::before,
 #menu::after {
-    background-color: #D84282;
     display: block;
     content: "";
-    width: var(--menu-bar-width);
-    height: var(--menu-bar-height);
     position: absolute;
+    left: 0;
 }
 
 #menu::before {
-    left: 0;
-    top: -20px;
+    top: calc(-1 * (var(--space-between)));
 }
 
 #menu::after {
-    left: 0;
-    top: 20px;
+    top: var(--space-between);
 }
 
+#container:hover #menu::before {
+    background-color: orangered;
+    transform: rotate(45deg);
+    top: 0;
+}
+
+#container:hover #menu {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#container:hover #menu::after {
+    background-color: orangered;
+    /* er staat een typo in de opdracht. Het onderste balkje moet */
+    /* natuurlijk naar boven draaien en niet naar beneden draaien */
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+#container:hover {
+    border-style: none;
+}
+
+/* PS.. Kleurtjes zijn er in gelaten voor de leuk */
